@@ -32,6 +32,15 @@ patches:
     inline:
       machine:
         network:
+          interfaces:
+            - interface: eno2
+              dhcp: false
+            - interface: eno2
+              dhcp: true
+            - interface: eno3
+              dhcp: false         
+            - interface: eno4
+              dhcp: false
           hostname: k8-worker-1
 ---
 kind: Machine
@@ -43,6 +52,15 @@ patches:
     inline:
       machine:
         network:
+          interfaces:
+            - interface: eno1np0
+              dhcp: true
+            - interface: eno2np1
+              dhcp: false
+            - interface: eno3np2
+              dhcp: false         
+            - interface: eno4np3
+              dhcp: false  
           hostname: k8-control-3
 ---
 kind: Machine
@@ -54,6 +72,15 @@ patches:
     inline:
       machine:
         network:
+          interfaces:
+            - interface: eno1np0
+              dhcp: true
+            - interface: eno2np1
+              dhcp: false
+            - interface: eno3np2
+              dhcp: false         
+            - interface: eno4np3
+              dhcp: false
           hostname: k8-control-2
 ---
 kind: Machine
@@ -65,4 +92,13 @@ patches:
     inline:
       machine:
         network:
+          interfaces:
+            - interface: eno1np0
+              dhcp: true
+            - interface: eno2np1
+              dhcp: false
+            - interface: eno3np2
+              dhcp: false         
+            - interface: eno4np3
+              dhcp: false         
           hostname: k8-control-1
