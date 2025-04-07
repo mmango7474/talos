@@ -33,7 +33,7 @@ patches:
       machine:
         network:
           interfaces:
-            - interface: eno2
+            - interface: eno1
               dhcp: false
             - interface: eno2
               dhcp: true
