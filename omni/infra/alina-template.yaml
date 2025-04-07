@@ -1,0 +1,64 @@
+kind: Cluster
+name: alinaai-k8
+kubernetes:
+  version: v1.32.3
+talos:
+  version: v1.9.5
+features:
+  enableWorkloadProxy: true
+patches:
+  - file: patches/cni.yaml
+---
+kind: ControlPlane
+machines:
+  - 4c4c4544-0033-4a10-804c-c8c04f485632
+  - 4c4c4544-005a-3610-8035-c2c04f315132
+  - 4c4c4544-005a-3710-8032-c2c04f315132
+---
+kind: Workers
+machines:
+  - 4c4c4544-0030-3510-804d-c3c04f4d4432
+---
+kind: Machine
+name: 4c4c4544-0030-3510-804d-c3c04f4d4432
+install:
+  disk: /dev/sda
+patches:
+  - idOverride: 400-cm-4c4c4544-0030-3510-804d-c3c04f4d4432
+    inline:
+      machine:
+        network:
+          hostname: k8-worker-1
+---
+kind: Machine
+name: 4c4c4544-0033-4a10-804c-c8c04f485632
+install:
+  disk: /dev/sdc
+patches:
+  - idOverride: 400-cm-4c4c4544-0033-4a10-804c-c8c04f485632
+    inline:
+      machine:
+        network:
+          hostname: k8-control-3
+---
+kind: Machine
+name: 4c4c4544-005a-3610-8035-c2c04f315132
+install:
+  disk: /dev/sda
+patches:
+  - idOverride: 400-cm-4c4c4544-005a-3610-8035-c2c04f315132
+    inline:
+      machine:
+        network:
+          hostname: k8-control-2
+---
+kind: Machine
+name: 4c4c4544-005a-3710-8032-c2c04f315132
+install:
+  disk: /dev/sda
+patches:
+  - idOverride: 400-cm-4c4c4544-005a-3710-8032-c2c04f315132
+    inline:
+      machine:
+        network:
+          hostname: k8-control-1
