@@ -8,6 +8,10 @@ features:
   enableWorkloadProxy: true
 patches:
   - file: patches/cni.yaml
+  - file: patches/cilium.yaml
+  - file: patches/monitoring.yaml
+  - file: patches/argocd.yaml
+  - file: patches/allowWorkers.yaml
 ---
 kind: ControlPlane
 machines:
