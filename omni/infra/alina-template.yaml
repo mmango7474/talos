@@ -1,23 +1,22 @@
 kind: Cluster
-name: alinaai-k8
+name: alinaai-cluster
 kubernetes:
   version: v1.32.3
 talos:
   version: v1.9.5
 features:
   enableWorkloadProxy: true
-patches:
-  - file: patches/cni.yaml
-  - file: patches/cilium.yaml
-  - file: patches/monitoring.yaml
-  - file: patches/argocd.yaml
-  - file: patches/allowWorkers.yaml
 ---
 kind: ControlPlane
 machines:
   - 4c4c4544-0033-4a10-804c-c8c04f485632
   - 4c4c4544-005a-3610-8035-c2c04f315132
   - 4c4c4544-005a-3710-8032-c2c04f315132
+patches:
+  - idOverride: 400-alinaai-cluster-control-planes-untaint
+    inline:
+      cluster:
+        allowSchedulingOnControlPlanes: true
 ---
 kind: Workers
 machines:
@@ -25,80 +24,92 @@ machines:
 ---
 kind: Machine
 name: 4c4c4544-0030-3510-804d-c3c04f4d4432
-install:
-  disk: /dev/sda
 patches:
   - idOverride: 400-cm-4c4c4544-0030-3510-804d-c3c04f4d4432
     inline:
       machine:
         network:
-          interfaces:
-            - interface: eno1
-              dhcp: false
-            - interface: eno2
-              dhcp: true
-            - interface: eno3
-              dhcp: false         
-            - interface: eno4
-              dhcp: false
           hostname: k8-worker-1
+          interfaces:
+            - dhcp: false
+              interface: eno1
+            - dhcp: true
+              interface: eno2
+            - dhcp: false
+              interface: eno3
+            - dhcp: false
+              interface: eno4
+            - dhcp: false
+              interface: enp7s0
+            - dhcp: false
+              interface: enp7s0d1
+            - dhcp: false
+              interface: enp9s0
+            - dhcp: false
+              interface: enp9s0d1
 ---
 kind: Machine
 name: 4c4c4544-0033-4a10-804c-c8c04f485632
-install:
-  disk: /dev/sdc
 patches:
   - idOverride: 400-cm-4c4c4544-0033-4a10-804c-c8c04f485632
     inline:
       machine:
         network:
+          hostname: k8-control-1
           interfaces:
-            - interface: eno1np0
-              dhcp: true
-            - interface: eno2np1
-              dhcp: false
-            - interface: eno3np2
-              dhcp: false         
-            - interface: eno4np3
-              dhcp: false  
-          hostname: k8-control-3
+            - dhcp: false
+              interface: eno1np0
+            - dhcp: false
+              interface: eno2np1
+            - dhcp: false
+              interface: eno3np2
+            - dhcp: true
+              interface: eno4np3
+            - dhcp: false
+              interface: enp59s0
+            - dhcp: false
+              interface: enp59s0d1
 ---
 kind: Machine
 name: 4c4c4544-005a-3610-8035-c2c04f315132
-install:
-  disk: /dev/sda
 patches:
   - idOverride: 400-cm-4c4c4544-005a-3610-8035-c2c04f315132
     inline:
       machine:
         network:
+          hostname: k8-control-3
           interfaces:
-            - interface: eno1np0
-              dhcp: true
-            - interface: eno2np1
-              dhcp: false
-            - interface: eno3np2
-              dhcp: false         
-            - interface: eno4np3
-              dhcp: false
-          hostname: k8-control-2
+            - dhcp: false
+              interface: eno1np0
+            - dhcp: false
+              interface: eno2np1
+            - dhcp: false
+              interface: eno3np2
+            - dhcp: true
+              interface: eno4np3
+            - dhcp: false
+              interface: enp59s0
+            - dhcp: false
+              interface: enp59s0d1
 ---
 kind: Machine
 name: 4c4c4544-005a-3710-8032-c2c04f315132
-install:
-  disk: /dev/sda
 patches:
   - idOverride: 400-cm-4c4c4544-005a-3710-8032-c2c04f315132
     inline:
       machine:
         network:
+          hostname: k8-control-2
           interfaces:
-            - interface: eno1np0
-              dhcp: true
-            - interface: eno2np1
-              dhcp: false
-            - interface: eno3np2
-              dhcp: false         
-            - interface: eno4np3
-              dhcp: false         
-          hostname: k8-control-1
+            - dhcp: false
+              interface: eno1np0
+            - dhcp: false
+              interface: eno2np1
+            - dhcp: false
+              interface: eno3np2
+            - dhcp: true
+              interface: eno4np3
+            - dhcp: false
+              interface: enp59s0
+            - dhcp: false
+              interface: enp59s0d1
